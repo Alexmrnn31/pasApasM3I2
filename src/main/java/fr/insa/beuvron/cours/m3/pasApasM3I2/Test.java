@@ -18,14 +18,42 @@ along with CoursBeuvron.  If not, see <http://www.gnu.org/licenses/>.
  */
 package fr.insa.beuvron.cours.m3.pasApasM3I2;
 
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
+
 /**
  *
  * @author francois
  */
 public class Test {
     
-    public static void main(String[] args) {
-        System.out.println("coucou");
+        public static Connection connectGeneralPostGres(String host,
+            int port, String database,
+            String user, String pass) 
+            throws ClassNotFoundException, SQLException {
+        Class.forName("org.postgresql.Driver");
+        Connection con = DriverManager.getConnection(
+                "jdbc:postgresql://" + host + ":" + port
+                + "/" + database,
+                user, pass);
+        con.setTransactionIsolation(Connection.TRANSACTION_SERIALIZABLE);
+        return con;
     }
+
+    public static Connection defautConnect()
+            throws ClassNotFoundException, SQLException {
+        return connectGeneralPostGres("localhost", 5439, "postgres", "postgres", "pass");
+    }
+
+    public static void main(String[] args) {
+        try ( Connection con = defautConnect()) {
+            System.out.println("connecté !!!");
+            
+        } catch (Exception ex) {
+            throw new Error(ex);
+        }
+    }
+
     
 }
