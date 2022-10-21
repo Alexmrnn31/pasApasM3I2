@@ -75,6 +75,7 @@
                     <noHeaderFiles>true</noHeaderFiles>
                     <stripDebug>true</stripDebug>
                     <noManPages>true</noManPages>
+<!-- A MODIFIER-->
                     <mainClass>fr.insa.beuvron.web.amour.guiFX.Main</mainClass>
                     <launcher>TutoVideoDessin</launcher>
                     <jlinkImageName>amourFX</jlinkImageName>

@@ -36,6 +36,14 @@ public class Utilisateur {
         this.nomRole = nomRole;
     }
 
+    @Override
+    public String toString() {
+        return "Utilisateur{" + "id=" + id + ", nom=" + nom 
+                + ", nomRole=" + nomRole + '}';
+    }
+    
+    
+
     /**
      * @return the id
      */

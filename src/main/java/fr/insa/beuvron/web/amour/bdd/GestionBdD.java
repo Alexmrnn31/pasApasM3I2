@@ -396,7 +396,8 @@ public class GestionBdD {
         }
     }
 
-    public static Optional<Utilisateur> login(Connection con, String nom, String pass) throws SQLException {
+    public static Optional<Utilisateur> login(Connection con,
+            String nom, String pass) throws SQLException {
         try ( PreparedStatement pst = con.prepareStatement(
                 "select fdbutilisateur.id as uid,nrole"
                 + " from fdbutilisateur "

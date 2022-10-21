@@ -19,7 +19,12 @@
 package fr.insa.beuvron.web.amour.guiFX;
 
 import fr.insa.beuvron.web.amour.SessionInfo;
+import fr.insa.beuvron.web.amour.bdd.GestionBdD;
+import fr.insa.beuvron.web.amour.guiFX.vues.EnteteLogin;
+import java.sql.Connection;
+import java.sql.SQLException;
 import javafx.scene.Node;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.BorderPane;
@@ -45,11 +50,30 @@ public class VuePrincipale extends BorderPane {
     public VuePrincipale() {
         this.sessionInfo = new SessionInfo();
         this.mainContent = new ScrollPane();
-        JavaFXUtils.addSimpleBorder(this.mainContent);
-        this.setCenter(this.mainContent);
-        this.setMainContent(new Label("coucou javaFX"));
+        try {
+            this.sessionInfo.setConBdD(GestionBdD.defautConnect());
+            JavaFXUtils.addSimpleBorder(this.mainContent);
+            this.setCenter(this.mainContent);
+            this.setMainContent(new Label("merci de vous connecter"));
+            this.setEntete(new EnteteLogin(this));
+
+        } catch (ClassNotFoundException ex) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("PB");
+            alert.setHeaderText("pas de driver");
+            alert.setContentText("pareil");
+            alert.showAndWait();
+
+        } catch (SQLException ex) {
+            JavaFXUtils.showErrorInAlert("ProblemBDD", "impossible de se connecter",
+                    ex.getLocalizedMessage());
+        }
     }
 
+    public Connection getBdd() {
+        return this.sessionInfo.getConBdD();
+    }
+    
     /**
      * @return the sessionInfo
      */
